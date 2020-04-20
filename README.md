@@ -6,4 +6,4 @@ found bugs:
 2. Expected status code <422> but was <404>.
 
 problems:
-because of founded bugs I was unable to get triangle list so I don't know "triangleID" and can't use it(
+because of found bugs I was unable to get triangle list so I don't know "triangleID" and can't use it(
