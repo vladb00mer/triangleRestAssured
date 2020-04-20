@@ -1,7 +1,7 @@
 # triangleRestAssured
-rest assured autotests for Naterra
+rest assured autotests for Natera
 
-founded bugs:
+found bugs:
 1. Expected status code <404> but was <401>.
 2. Expected status code <422> but was <404>.
 
