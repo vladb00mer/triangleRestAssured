@@ -1,4 +1,5 @@
 import io.restassured.http.Header;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.*;
@@ -7,12 +8,15 @@ import static org.hamcrest.Matchers.*;
 
 public class TriangleTest {
 
-    Header header = new Header("X-User", "c13f97b5-7b9a-4cd5-a7c7-5cdbf1d4966d");
-    String baseUri = "https://qa-quiz.natera.com";
+    static Header header;
+    static String baseUri;
 
-    @Test
+    @BeforeAll
     @DisplayName("add triangle")
-    public void createTriangle() {
+    public static void createTriangle() {
+
+        header = new Header("X-User", "c13f97b5-7b9a-4cd5-a7c7-5cdbf1d4966d");
+        baseUri = "https://qa-quiz.natera.com";
 
         given().header(header).baseUri(baseUri).params("input","3;4;5").post("/triangle");
     }
