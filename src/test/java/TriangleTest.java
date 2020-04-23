@@ -23,7 +23,7 @@ public class TriangleTest {
     @DisplayName("create triangle")
     public void createTriangle() {
 
-        given().header(header).baseUri(baseUri).params("input","3;4;5")
+        given().header(header).baseUri(baseUri).params("input", "3;4;5")
                 .when().post("/triangle").then().statusCode(200);
     }
 
