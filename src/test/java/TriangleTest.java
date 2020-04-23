@@ -2,9 +2,9 @@ import io.restassured.http.Header;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static io.restassured.RestAssured.*;
-import static io.restassured.matcher.RestAssuredMatchers.*;
-import static org.hamcrest.Matchers.*;
+
 
 public class TriangleTest {
 
@@ -13,12 +13,18 @@ public class TriangleTest {
 
     @BeforeAll
     @DisplayName("add triangle")
-    public static void createTriangle() {
+    public static void setUp() {
 
         header = new Header("X-User", "c13f97b5-7b9a-4cd5-a7c7-5cdbf1d4966d");
         baseUri = "https://qa-quiz.natera.com";
+    }
 
-        given().header(header).baseUri(baseUri).params("input","3;4;5").post("/triangle");
+    @Test
+    @DisplayName("create triangle")
+    public void createTriangle() {
+
+        given().header(header).baseUri(baseUri).params("input","3;4;5")
+                .when().post("/triangle").then().statusCode(200);
     }
 
     @Test
