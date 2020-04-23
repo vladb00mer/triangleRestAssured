@@ -1,4 +1,5 @@
 import io.restassured.http.Header;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ public class TriangleTest {
     @DisplayName("create triangle")
     public void createTriangle() {
 
-        given().header(header).baseUri(baseUri).params("input", "3;4;5")
+        given().header(header).baseUri(baseUri).param("input", 3,4,5)
                 .when().post("/triangle").then().statusCode(200);
     }
 
@@ -31,14 +32,14 @@ public class TriangleTest {
     @DisplayName("get triangle/{id}")
     public void getTriangleById() {
 
-        given().header(header).baseUri(baseUri).when().get("/triangle/1").then().statusCode(200);
+        given().header(header).baseUri(baseUri).when().get("/triangle/{id}", 1).then().statusCode(200);
     }
 
     @Test
     @DisplayName("delete triangle/{id}")
     public void deleteTriangleById() {
 
-        given().header(header).baseUri(baseUri).when().delete("/triangle/1").then().statusCode(200);
+        given().header(header).baseUri(baseUri).when().delete("/triangle/{id}", 2).then().statusCode(200);
     }
 
     @Test
@@ -52,14 +53,14 @@ public class TriangleTest {
     @DisplayName("get triangle/{id}/perimeter")
     public void getTrianglePerimeterById() {
 
-        given().header(header).baseUri(baseUri).when().get("/triangle/1/perimeter").then().statusCode(200);
+        given().header(header).baseUri(baseUri).when().get("/triangle/{id}/perimeter", 3).then().statusCode(200);
     }
 
     @Test
     @DisplayName("get triangle/{id}/area")
     public void getTriangleAreaById() {
 
-        given().header(header).baseUri(baseUri).when().get("/triangle/1/area").then().statusCode(200);
+        given().header(header).baseUri(baseUri).when().get("/triangle/{id}/area", 4).then().statusCode(200);
     }
 
     @Test
@@ -89,5 +90,12 @@ public class TriangleTest {
     public void test422() {
 
         given().header(header).baseUri(baseUri).when().get("/trangle/all").then().assertThat().statusCode(422);
+    }
+
+    @AfterAll
+    public static void tearDown() {
+
+        header = null;
+        baseUri = null;
     }
 }
