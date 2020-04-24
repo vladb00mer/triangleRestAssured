@@ -4,13 +4,19 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.*;
+import static io.restassured.http.ContentType.JSON;
 
 
 public class TriangleTest {
 
     static Header header;
     static String baseUri;
+    String id;
+    Map<String, Object> jsonAsMap;
 
     @BeforeAll
     @DisplayName("add triangle")
@@ -24,43 +30,53 @@ public class TriangleTest {
     @DisplayName("create triangle")
     public void createTriangle() {
 
-        given().header(header).baseUri(baseUri).param("input", 3,4,5)
-                .when().post("/triangle").then().statusCode(200);
+        jsonAsMap = new HashMap<>();
+        jsonAsMap.put("input", "3;4;5");
+
+        given().header(header).baseUri(baseUri).
+                contentType(JSON).
+                body(jsonAsMap).
+                when().
+                post("/triangle").
+                then().
+                assertThat().
+                statusCode(200);
     }
 
     @Test
     @DisplayName("get triangle/{id}")
     public void getTriangleById() {
 
-        given().header(header).baseUri(baseUri).when().get("/triangle/{id}", 1).then().statusCode(200);
+        given().header(header).baseUri(baseUri).when().get("/triangle/{id}", "b9501cb3-735f-46de-ac5e-f713f14906d8").then().statusCode(200);
     }
 
     @Test
     @DisplayName("delete triangle/{id}")
     public void deleteTriangleById() {
 
-        given().header(header).baseUri(baseUri).when().delete("/triangle/{id}", 2).then().statusCode(200);
+        given().header(header).baseUri(baseUri).when().delete("/triangle/{id}", "95e9a7a7-8cd2-4269-b3b9-d23976833b61").then().statusCode(200);
     }
 
     @Test
     @DisplayName("get triangle/all")
     public void getAllTriangles() {
 
-        given().header(header).baseUri(baseUri).when().get("/triangle/all").then().statusCode(200);
+        String res = given().header(header).baseUri(baseUri).when().get("/triangle/all").asString();
+        System.out.println(res);
     }
 
     @Test
     @DisplayName("get triangle/{id}/perimeter")
     public void getTrianglePerimeterById() {
 
-        given().header(header).baseUri(baseUri).when().get("/triangle/{id}/perimeter", 3).then().statusCode(200);
+        given().header(header).baseUri(baseUri).when().get("/triangle/{id}/perimeter", "104f57d1-cfce-40f3-8291-a383748bf247").then().statusCode(200);
     }
 
     @Test
     @DisplayName("get triangle/{id}/area")
     public void getTriangleAreaById() {
 
-        given().header(header).baseUri(baseUri).when().get("/triangle/{id}/area", 4).then().statusCode(200);
+        given().header(header).baseUri(baseUri).when().get("/triangle/{id}/area", "0bdd8c27-df79-4a48-9ccb-612436cd2603").then().statusCode(200);
     }
 
     @Test
