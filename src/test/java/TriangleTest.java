@@ -2,6 +2,7 @@ import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,9 +21,15 @@ public class TriangleTest {
 
     @BeforeAll
     @DisplayName("add triangle")
-    public static void setUp() {
+    public static void setUpAll() {
 
         header = new Header("X-User", "c13f97b5-7b9a-4cd5-a7c7-5cdbf1d4966d");
+    }
+
+    @BeforeEach
+    @DisplayName("basic configuration")
+    public static void setUpEach() {
+
         baseURI = "https://qa-quiz.natera.com";
     }
 
@@ -129,5 +136,6 @@ public class TriangleTest {
 
         header = null;
         baseUri = null;
+        RestAssured.reset();
     }
 }
